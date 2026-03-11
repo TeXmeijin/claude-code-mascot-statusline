@@ -161,9 +161,13 @@ pnpm typecheck
 
 ## Good Bye
 
-1. `~/.claude/settings.json` から `statusLine` エントリを削除または置換
-2. `~/.claude/settings.json` からマスコットフックエントリを削除
-3. 必要に応じて `~/.claude/plugins/claude-code-mascot/` を削除（キャッシュされた状態とユーザーパックのクリア）
+Claude Code 内でアンインストールコマンドを実行してください:
+
+```
+/claude-code-mascot:uninstall
+```
+
+`statusLine` エントリ、すべてのマスコットフックエントリ、およびランタイムデータディレクトリが削除されます。完了後、Claude Code を再起動してください。
 
 ## ライセンス
 

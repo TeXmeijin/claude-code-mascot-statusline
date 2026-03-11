@@ -161,9 +161,13 @@ pnpm typecheck
 
 ## Good Bye
 
-1. Remove or replace the `statusLine` entry in `~/.claude/settings.json`
-2. Remove the mascot hook entries from `~/.claude/settings.json`
-3. Optionally remove `~/.claude/plugins/claude-code-mascot/` to clear cached state and user packs
+Run the uninstall command inside Claude Code:
+
+```
+/claude-code-mascot:uninstall
+```
+
+This removes the `statusLine` entry, all mascot hook entries from your settings, and the runtime data directory. Restart Claude Code to complete the removal.
 
 ## License
 
