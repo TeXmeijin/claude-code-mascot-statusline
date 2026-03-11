@@ -5,7 +5,8 @@ node_modules/
 google-cloud-sdk/
 google-cloud-cli-darwin-arm.tar.gz
 
-.claude/
+.claude/*
+!.claude/skills/
 .claude-mascot/
 
 coverage/
