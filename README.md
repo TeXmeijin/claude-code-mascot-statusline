@@ -15,7 +15,7 @@ This mascot changes its expression every time a tool runs during your session. W
 
 For engineers who find themselves more and more consumed by their work — a small dose of comfort, right in your terminal.
 
-## Features
+## Personality
 
 - **Pixel-art mascot** rendered directly in the terminal — not ASCII art
 - **Reacts to 9 session states**: idle, thinking, tool running, tool success, tool failure, permission prompt, subagent running, done, and auth success
@@ -23,7 +23,7 @@ For engineers who find themselves more and more consumed by their work — a sma
 - **Status summary**: git branch, model name, tool count, context %, and API usage
 - **Custom mascot packs**: create and share your own characters
 
-## Quick Start
+## Bring One Home
 
 ### Via Claude Code Plugin Marketplace (Recommended)
 
@@ -49,7 +49,7 @@ node dist/cli/setup-helper.js --write
 
 If `statusLine` already exists in your settings, add `--force` to replace it. Hook entries are merged without removing your existing hooks.
 
-## Custom Packs
+## Create Your Own Companion
 
 The mascot is fully swappable. You can create your own character pack and use it instead of the default cat.
 
