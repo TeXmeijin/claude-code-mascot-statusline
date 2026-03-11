@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "claude-code-mascot",
-      "source": ".",
+      "source": "./",
       "description": "Pixel-art mascot for Claude Code status lines"
     }
   ]

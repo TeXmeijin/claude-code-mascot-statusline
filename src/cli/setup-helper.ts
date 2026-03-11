@@ -89,8 +89,8 @@ async function main(): Promise<void> {
   }
 
   const existingCommand = settings.statusLine?.command;
-  if (existingCommand && existingCommand !== command && !args.has("--force")) {
-    throw new Error(`statusLine already exists in ${settingsPath}; rerun with --force to replace it`);
+  if (existingCommand && existingCommand !== command) {
+    process.stderr.write(`Replacing existing statusLine command:\n  - ${existingCommand}\n  + ${command}\n`);
   }
 
   settings.statusLine = {

@@ -48,7 +48,7 @@ npm install && npm run build
 node dist/cli/setup-helper.js --write
 ```
 
-`statusLine` が既に設定されている場合は `--force` を追加してください。フックエントリは既存のフックを削除せずにマージされます。
+既存の `statusLine` は自動的に置き換えられます。フックエントリは既存のフックを削除せずにマージされます。
 
 ## あなただけのお供をつくる
 

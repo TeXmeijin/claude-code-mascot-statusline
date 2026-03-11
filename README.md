@@ -48,7 +48,7 @@ npm install && npm run build
 node dist/cli/setup-helper.js --write
 ```
 
-If `statusLine` already exists in your settings, add `--force` to replace it. Hook entries are merged without removing your existing hooks.
+Existing `statusLine` is replaced automatically. Hook entries are merged without removing your existing hooks.
 
 ## Create Your Own Companion
 
