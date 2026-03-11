@@ -7,6 +7,14 @@ A pixel-sprite mascot that lives in your Claude Code status line.
 ![Claude Code Mascot screenshot](docs/screenshot.png)
 ![Claude Code Mascot success](docs/screenshot-success.png)
 
+## Concept
+
+Claude Code has dramatically improved development efficiency — but it has also increased cognitive load. In the middle of intense coding sessions, we need a little moment of comfort.
+
+This mascot changes its expression every time a tool runs during your session. When context window usage gets critical, it turns bright red in panic. You can even create your own custom character pack (this is still in beta — give it a try!).
+
+For engineers who find themselves more and more consumed by their work — a small dose of comfort, right in your terminal.
+
 ## Features
 
 - **Pixel-art mascot** rendered directly in the terminal — not ASCII art
