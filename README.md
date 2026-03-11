@@ -5,6 +5,7 @@ A pixel-sprite mascot that lives in your Claude Code status line.
 [日本語版はこちら / Japanese](README.ja.md)
 
 ![Claude Code Mascot screenshot](docs/screenshot.png)
+![Claude Code Mascot success](docs/screenshot-success.png)
 
 ## Features
 
