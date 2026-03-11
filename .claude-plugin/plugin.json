@@ -1,0 +1,14 @@
+{
+  "name": "claude-code-mascot",
+  "description": "ASCII and ANSI mascot runtime for Claude Code status lines.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/TeXmeijin/claude-code-mascot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TeXmeijin/claude-code-mascot.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "meijin"
+  }
+}

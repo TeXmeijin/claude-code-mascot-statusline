@@ -1,0 +1,52 @@
+name: terminal-sprout
+specVersion: 2
+displayName: Terminal Sprout
+author: community-template
+description: Small pixel sprout example pack using sprite grids rather than text art.
+sprite:
+  width: 6
+  height: 6
+  palette:
+    - null
+    - "#213547"
+    - "#63d2a1"
+    - "#c8f169"
+    - "#f4c95d"
+  renderMode: bg-space
+  pixelWidth: 2
+sprites:
+  idle_1:
+    - [0, 0, 2, 2, 0, 0]
+    - [0, 2, 3, 3, 2, 0]
+    - [0, 0, 1, 1, 0, 0]
+    - [0, 1, 4, 4, 1, 0]
+    - [1, 4, 4, 4, 4, 1]
+    - [0, 1, 0, 0, 1, 0]
+  thinking_1:
+    - [0, 0, 2, 3, 0, 0]
+    - [0, 2, 3, 3, 2, 0]
+    - [0, 0, 1, 1, 0, 4]
+    - [0, 1, 4, 4, 1, 0]
+    - [1, 4, 4, 4, 4, 1]
+    - [0, 1, 0, 0, 1, 0]
+  done_1:
+    - [0, 2, 0, 0, 2, 0]
+    - [2, 3, 3, 3, 3, 2]
+    - [0, 0, 1, 1, 0, 0]
+    - [0, 1, 4, 4, 1, 0]
+    - [1, 4, 2, 2, 4, 1]
+    - [0, 1, 0, 0, 1, 0]
+states:
+  idle:
+    - idle_1
+  thinking:
+    - thinking_1
+  done:
+    - done_1
+fallbacks:
+  unknown: idle_1
+  narrow: idle_1
+timing:
+  idleFramePeriodMs: 1000
+  thinkingFramePeriodMs: 300
+  doneHoldMs: 2500

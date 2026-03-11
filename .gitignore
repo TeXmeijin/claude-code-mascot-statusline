@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.pnpm-store/
+.DS_Store
+
+google-cloud-sdk/
+google-cloud-cli-darwin-arm.tar.gz
+
+.claude/
+.claude-mascot/
+
+coverage/
+*.log
+
+.env
+.env.*

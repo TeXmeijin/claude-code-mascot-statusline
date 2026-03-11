@@ -1,0 +1,53 @@
+{
+  "name": "claude-code-mascot-statusline",
+  "version": "0.1.0",
+  "description": "Claude Code plugin that renders a pixel-art mascot in the status line.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TeXmeijin/claude-code-mascot.git"
+  },
+  "homepage": "https://github.com/TeXmeijin/claude-code-mascot",
+  "license": "MIT",
+  "author": "meijin",
+  "keywords": ["claude-code", "plugin", "mascot", "statusline", "pixel-art", "terminal"],
+  "bin": {
+    "claude-mascot-hook": "./dist/cli/hook-state-writer.js",
+    "claude-mascot-statusline": "./dist/cli/render-status-line.js",
+    "claude-mascot-statusline-lab": "./dist/cli/statusline-lab.js",
+    "claude-mascot-analyze-capture": "./dist/cli/analyze-capture.js",
+    "claude-mascot-validate-pack": "./dist/cli/validate-pack.js",
+    "claude-mascot-preview-pack": "./dist/cli/preview-pack.js",
+    "claude-mascot-storybook": "./dist/cli/storybook.js",
+    "claude-mascot-setup": "./dist/cli/setup-helper.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "statusline-lab": "node dist/cli/statusline-lab.js",
+    "analyze-capture": "node dist/cli/analyze-capture.js"
+  },
+  "files": [
+    "dist",
+    "packs",
+    "hooks",
+    ".claude-plugin",
+    "docs",
+    "examples",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "string-width": "^7.2.0",
+    "strip-ansi": "^7.1.0",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}
