@@ -1,7 +1,57 @@
 ---
 description: Configure claude-code-mascot statusLine and hooks
-allowed-tools: Bash, Read, Edit, AskUserQuestion
+allowed-tools: Bash, Read, Edit, Write, AskUserQuestion
 ---
+
+## Step 0: Choose mascot pack
+
+Ask the user which mascot pack they want to use.
+
+Use AskUserQuestion (adapt language to the user's language):
+- Question: Which mascot pack would you like to use?
+- Options:
+  - "pixel-buddy" — A pixel-art cat that reacts to your coding session (default)
+  - "space-invader" — A retro arcade-style space invader
+
+If the user chooses **pixel-buddy**, skip to Step 1 (it's the default, no config needed).
+
+If the user chooses **space-invader**, proceed to Step 0.5.
+
+## Step 0.5: Choose scope (space-invader only)
+
+Ask the user where they want to apply the space-invader pack.
+
+Use AskUserQuestion (adapt language to the user's language):
+- Question: Where should the space-invader pack be applied?
+- Options:
+  - "All projects (user global)" — Writes to `~/.claude/plugins/claude-code-mascot/config.json`
+  - "This project only" — Writes to `.claude/mascot.json` in the current project
+
+Based on the user's choice, write the config file:
+
+For **user global**:
+```bash
+mkdir -p ~/.claude/plugins/claude-code-mascot
+```
+Then use the Write tool to write `~/.claude/plugins/claude-code-mascot/config.json`:
+```json
+{
+  "pack": "space-invader"
+}
+```
+
+For **this project only**:
+```bash
+mkdir -p .claude
+```
+Then use the Write tool to write `.claude/mascot.json`:
+```json
+{
+  "pack": "space-invader"
+}
+```
+
+Confirm to the user that the config was written.
 
 ## Step 1: Run setup helper
 

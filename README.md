@@ -56,6 +56,10 @@ node dist/cli/setup-helper.js --write
 
 Existing `statusLine` is replaced automatically. Hook entries are merged without removing your existing hooks.
 
+> A second built-in pack **space-invader** is also available — useful for distinguishing between projects or accounts.
+>
+> ![Space Invader pack](docs/screenshot-space-invader.png)
+
 ## Create Your Own Companion
 
 The mascot is fully swappable. You can create your own character pack and use it instead of the default cat.
@@ -91,6 +95,8 @@ node dist/cli/storybook.js --pack your-pack-name
 ```
 
 See [docs/pack-spec.md](docs/pack-spec.md) for the full pack specification.
+
+> **Tip:** You can also use the `/create-mascot-pack` skill in Claude Code to create or iterate on a pack interactively.
 
 ## Configuration
 
@@ -164,6 +170,7 @@ pnpm typecheck
 - **Bug fixes**: If you find a clear bug, please open a pull request.
 - **Custom mascots for yourself**: Create a custom pack locally — no need to upstream it.
 - **New mascot packs for everyone**: If you've made something great, open a PR to add it as an additional built-in pack. We'd love to see it!
+- **Creating packs with Claude Code**: Use the `/create-mascot-pack` skill to scaffold and iterate on new packs interactively.
 
 ## Good Bye
 
