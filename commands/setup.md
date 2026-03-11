@@ -21,19 +21,24 @@ If the user chooses **space-invader**, proceed to Step 0.5.
 
 Ask the user where they want to apply the space-invader pack.
 
+The config directory is `$CLAUDE_CONFIG_DIR` if set, otherwise `~/.claude`. Resolve it first:
+```bash
+echo "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+```
+
 Use AskUserQuestion (adapt language to the user's language):
 - Question: Where should the space-invader pack be applied?
 - Options:
-  - "All projects (user global)" — Writes to `~/.claude/plugins/claude-code-mascot/config.json`
+  - "All projects (user global)" — Writes to `<config-dir>/plugins/claude-code-mascot/config.json`
   - "This project only" — Writes to `.claude/mascot.json` in the current project
 
 Based on the user's choice, write the config file:
 
 For **user global**:
 ```bash
-mkdir -p ~/.claude/plugins/claude-code-mascot
+mkdir -p "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/plugins/claude-code-mascot"
 ```
-Then use the Write tool to write `~/.claude/plugins/claude-code-mascot/config.json`:
+Then use the Write tool to write `<resolved-config-dir>/plugins/claude-code-mascot/config.json`:
 ```json
 {
   "pack": "space-invader"
@@ -51,11 +56,11 @@ Then use the Write tool to write `.claude/mascot.json`:
 }
 ```
 
-Confirm to the user that the config was written.
+Confirm to the user which path was written.
 
 ## Step 1: Run setup helper
 
-Run the setup helper to merge statusLine and hooks into `~/.claude/settings.json`.
+Run the setup helper to merge statusLine and hooks into the user's settings.json (respects `$CLAUDE_CONFIG_DIR`).
 
 The `--plugin-root` flag tells the helper where the plugin is installed:
 
@@ -72,7 +77,7 @@ node "${CLAUDE_PLUGIN_ROOT}/dist/cli/setup-helper.js" --write --plugin-root "${C
 
 ## Step 2: Verify
 
-Read `~/.claude/settings.json` and confirm:
+Read the settings.json that was just updated and confirm:
 
 1. `statusLine.command` is set and points to `render-status-line.js`
 2. `hooks` contains entries for mascot hook events (SessionStart, Stop, etc.)
