@@ -1,4 +1,5 @@
 import { execFile as execFileCb } from "node:child_process";
+import path from "node:path";
 import { promisify } from "node:util";
 import stringWidth from "string-width";
 import stripAnsi from "strip-ansi";
@@ -76,7 +77,7 @@ export async function renderStatusLine(input: StatusLineInput, options: RenderOp
     safeBackground: options.safeBackground ?? config.safeBackground ?? "#000000",
     paletteOverride: heatPalette
   });
-  const summary = summarizeState(effectiveState, sessionState, input, usageData, gitBranch, colorEnabled);
+  const summary = summarizeState(effectiveState, sessionState, input, usageData, gitBranch, colorEnabled, projectDir);
 
   if (config.twoLine) {
     return `${art}\n${truncate(summary, widthHint)}`;
@@ -140,7 +141,8 @@ export function summarizeState(
   input: StatusLineInput,
   usageData?: UsageData,
   gitBranch?: string,
-  colorEnabled?: boolean
+  colorEnabled?: boolean,
+  projectDir?: string
 ): string {
   const base = (() => {
     switch (state) {
@@ -172,6 +174,9 @@ export function summarizeState(
   })();
 
   const extras: string[] = [];
+  if (projectDir) {
+    extras.push(path.basename(projectDir));
+  }
   if (gitBranch) {
     extras.push(`⎇ ${gitBranch}`);
   }
