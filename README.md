@@ -4,7 +4,7 @@ A pixel-sprite mascot that lives in your Claude Code status line.
 
 [日本語版はこちら / Japanese](README.ja.md)
 
-<!-- TODO: Add screenshot or GIF here -->
+![Claude Code Mascot screenshot](docs/screenshot.png)
 
 ## Features
 
