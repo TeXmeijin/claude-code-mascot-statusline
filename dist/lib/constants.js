@@ -18,7 +18,6 @@ export const DEFAULT_TIMINGS = {
     idleFramePeriodMs: 1200,
     thinkingFramePeriodMs: 350,
     toolFramePeriodMs: 250,
-    doneFramePeriodMs: 800,
     doneHoldMs: 2500,
     successHoldMs: 1200,
     failureHoldMs: 1800,

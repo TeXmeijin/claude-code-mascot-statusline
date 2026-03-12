@@ -192,8 +192,6 @@ function resolveFramePeriod(manifest, state) {
             return manifest.timing?.thinkingFramePeriodMs ?? DEFAULT_TIMINGS.thinkingFramePeriodMs;
         case "tool_running":
             return manifest.timing?.toolFramePeriodMs ?? DEFAULT_TIMINGS.toolFramePeriodMs;
-        case "done":
-            return manifest.timing?.doneFramePeriodMs ?? DEFAULT_TIMINGS.doneFramePeriodMs;
         default:
             return 0;
     }

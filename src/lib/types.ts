@@ -47,7 +47,6 @@ export interface PackTiming {
   idleFramePeriodMs?: number;
   thinkingFramePeriodMs?: number;
   toolFramePeriodMs?: number;
-  doneFramePeriodMs?: number;
   doneHoldMs?: number;
   successHoldMs?: number;
   failureHoldMs?: number;
