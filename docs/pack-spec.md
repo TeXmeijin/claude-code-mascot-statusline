@@ -105,5 +105,5 @@ Validation rules:
 ## Search Order
 
 1. `<project>/.claude/mascot-packs/<pack-name>`
-2. `~/.claude/plugins/claude-code-mascot/packs/<pack-name>`
+2. `~/.claude/plugins/claude-code-mascot-statusline/packs/<pack-name>`
 3. Bundled plugin packs in `packs/`

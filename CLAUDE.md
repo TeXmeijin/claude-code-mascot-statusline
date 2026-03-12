@@ -35,7 +35,7 @@ Relevant files:
 
 Runtime state is derived from two sources:
 
-- Hook-persisted state in `$CLAUDE_CONFIG_DIR/plugins/claude-code-mascot/state` (default: `~/.claude/plugins/claude-code-mascot/state`)
+- Hook-persisted state in `$CLAUDE_CONFIG_DIR/plugins/claude-code-mascot-statusline/state` (default: `~/.claude/plugins/claude-code-mascot-statusline/state`)
 - Transcript-derived state from `transcript_path`
 
 Hook state is useful when hooks are installed correctly. Transcript-derived state is more resilient because `statusLine` receives `transcript_path` even when the plugin's hooks were never merged into `settings.json`.
@@ -68,7 +68,7 @@ Relevant file:
 
 ### 4. Hierarchical configuration
 
-Configuration is resolved in priority order: environment variables → project config (`.claude/mascot.json`) → user config (`~/.claude/plugins/claude-code-mascot/config.json`) → defaults.
+Configuration is resolved in priority order: environment variables → project config (`.claude/mascot.json`) → user config (`~/.claude/plugins/claude-code-mascot-statusline/config.json`) → defaults.
 
 | Key | Type | Default | Description |
 |---|---|---|---|
@@ -173,7 +173,7 @@ First checks:
 
 ```bash
 node dist/cli/setup-helper.js
-ls ~/.claude/plugins/claude-code-mascot/state
+ls ~/.claude/plugins/claude-code-mascot-statusline/state
 ```
 
 ### “The mascot looks like ASCII art”

@@ -2,7 +2,7 @@
   "name": "pixel-buddy",
   "specVersion": 2,
   "displayName": "Pixel Buddy",
-  "author": "claude-code-mascot",
+  "author": "claude-code-mascot-statusline",
   "description": "Compact cat mascot with a broader head silhouette and a small body for Claude Code status lines.",
   "sprite": {
     "width": 16,

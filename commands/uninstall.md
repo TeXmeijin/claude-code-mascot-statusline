@@ -1,5 +1,5 @@
 ---
-description: Remove claude-code-mascot statusLine, hooks, and runtime data
+description: Remove claude-code-mascot-statusline statusLine, hooks, and runtime data
 allowed-tools: Bash, Read, AskUserQuestion
 ---
 

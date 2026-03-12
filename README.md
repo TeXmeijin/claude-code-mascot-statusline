@@ -35,8 +35,8 @@ Because this is event-driven rather than continuous polling, the displayed state
 ### Via Claude Code Plugin Marketplace (Recommended)
 
 ```
-/plugin marketplace add TeXmeijin/claude-code-mascot
-/plugin install claude-code-mascot
+/plugin marketplace add TeXmeijin/claude-code-mascot-statusline
+/plugin install claude-code-mascot-statusline
 ```
 
 Then run the setup skill to configure your status line and hooks:
@@ -48,8 +48,8 @@ Then run the setup skill to configure your status line and hooks:
 ### Manual Install
 
 ```bash
-git clone https://github.com/TeXmeijin/claude-code-mascot.git
-cd claude-code-mascot
+git clone https://github.com/TeXmeijin/claude-code-mascot-statusline.git
+cd claude-code-mascot-statusline
 npm install && npm run build
 node dist/cli/setup-helper.js --write
 ```
@@ -67,14 +67,14 @@ The mascot is fully swappable. You can create your own character pack and use it
 ### Pack search order
 
 1. **Project-local**: `<project>/.claude/mascot-packs/<pack-name>/`
-2. **User-global**: `~/.claude/plugins/claude-code-mascot/packs/<pack-name>/`
+2. **User-global**: `~/.claude/plugins/claude-code-mascot-statusline/packs/<pack-name>/`
 3. **Bundled**: `packs/<pack-name>/` (ships with the plugin)
 
 ### Creating a custom pack
 
 1. Copy `examples/external-pack/pack.yaml` as a starting point
 2. Place your pack in `~/.claude-mascot/packs/<your-pack-name>/pack.json` (or `pack.yaml`)
-3. Set the pack name in `~/.claude/plugins/claude-code-mascot/config.json`:
+3. Set the pack name in `~/.claude/plugins/claude-code-mascot-statusline/config.json`:
 
 ```json
 {
@@ -85,7 +85,7 @@ The mascot is fully swappable. You can create your own character pack and use it
 4. Validate your pack:
 
 ```bash
-node dist/cli/validate-pack.js ~/.claude/plugins/claude-code-mascot/packs/your-pack-name
+node dist/cli/validate-pack.js ~/.claude/plugins/claude-code-mascot-statusline/packs/your-pack-name
 ```
 
 5. Preview it:
@@ -102,7 +102,7 @@ See [docs/pack-spec.md](docs/pack-spec.md) for the full pack specification.
 
 ### Config files
 
-- **User config**: `~/.claude/plugins/claude-code-mascot/config.json`
+- **User config**: `~/.claude/plugins/claude-code-mascot-statusline/config.json`
 - **Project config**: `.claude/mascot.json` (overrides user config)
 
 ```json
@@ -157,8 +157,8 @@ node dist/cli/setup-helper.js --write
 ## Development
 
 ```bash
-git clone https://github.com/TeXmeijin/claude-code-mascot.git
-cd claude-code-mascot
+git clone https://github.com/TeXmeijin/claude-code-mascot-statusline.git
+cd claude-code-mascot-statusline
 pnpm install
 pnpm build
 pnpm test
@@ -177,7 +177,7 @@ pnpm typecheck
 Run the uninstall command inside Claude Code:
 
 ```
-/claude-code-mascot:uninstall
+/claude-code-mascot-statusline:uninstall
 ```
 
 This removes the `statusLine` entry, all mascot hook entries from your settings, and the runtime data directory. Restart Claude Code to complete the removal.

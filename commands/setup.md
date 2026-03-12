@@ -1,5 +1,5 @@
 ---
-description: Configure claude-code-mascot statusLine and hooks
+description: Configure claude-code-mascot-statusline statusLine and hooks
 allowed-tools: Bash, Read, Edit, Write, AskUserQuestion
 ---
 
@@ -29,16 +29,16 @@ echo "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 Use AskUserQuestion (adapt language to the user's language):
 - Question: Where should the space-invader pack be applied?
 - Options:
-  - "All projects (user global)" — Writes to `<config-dir>/plugins/claude-code-mascot/config.json`
+  - "All projects (user global)" — Writes to `<config-dir>/plugins/claude-code-mascot-statusline/config.json`
   - "This project only" — Writes to `.claude/mascot.json` in the current project
 
 Based on the user's choice, write the config file:
 
 For **user global**:
 ```bash
-mkdir -p "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/plugins/claude-code-mascot"
+mkdir -p "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/plugins/claude-code-mascot-statusline"
 ```
-Then use the Write tool to write `<resolved-config-dir>/plugins/claude-code-mascot/config.json`:
+Then use the Write tool to write `<resolved-config-dir>/plugins/claude-code-mascot-statusline/config.json`:
 ```json
 {
   "pack": "space-invader"
@@ -95,13 +95,13 @@ Tell the user:
 Then, show the GitHub repository URL and ask if they'd like to star it.
 
 Use AskUserQuestion (adapt language to the user's language):
-- Show the repository URL: https://github.com/TeXmeijin/claude-code-mascot
+- Show the repository URL: https://github.com/TeXmeijin/claude-code-mascot-statusline
 - Ask if they'd like to ⭐ star the repository to support the project
 - Options: "Star it" / "Skip"
 
 If user chooses to star and `gh` CLI is available, run:
 ```bash
-gh api -X PUT /user/starred/TeXmeijin/claude-code-mascot
+gh api -X PUT /user/starred/TeXmeijin/claude-code-mascot-statusline
 ```
 Then confirm the star was successful.
 

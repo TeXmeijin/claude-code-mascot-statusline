@@ -5,7 +5,7 @@ export function getClaudeConfigDir() {
 }
 export const APP_HOME = process.env.CLAUDE_MASCOT_HOME
     ? path.resolve(process.env.CLAUDE_MASCOT_HOME)
-    : path.join(getClaudeConfigDir(), "plugins", "claude-code-mascot");
+    : path.join(getClaudeConfigDir(), "plugins", "claude-code-mascot-statusline");
 export const STATE_DIR = path.join(APP_HOME, "state");
 export const USER_PACKS_DIR = path.join(APP_HOME, "packs");
 export const USER_CONFIG_PATH = path.join(APP_HOME, "config.json");

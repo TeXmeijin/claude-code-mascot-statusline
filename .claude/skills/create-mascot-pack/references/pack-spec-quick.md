@@ -133,5 +133,5 @@ timing:
 ## Pack Search Order
 
 1. Project-local: `<project>/.claude/mascot-packs/<pack-name>/`
-2. User-global: `~/.claude/plugins/claude-code-mascot/packs/<pack-name>/`
+2. User-global: `~/.claude/plugins/claude-code-mascot-statusline/packs/<pack-name>/`
 3. Bundled: `packs/<pack-name>/` (ships with plugin)

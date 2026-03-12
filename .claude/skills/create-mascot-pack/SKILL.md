@@ -1,7 +1,7 @@
 ---
 name: create-mascot-pack
 description: >
-  Create or modify pixel-art mascot packs for claude-code-mascot plugin.
+  Create or modify pixel-art mascot packs for claude-code-mascot-statusline plugin.
   Use when: creating a new character pack from scratch, modifying existing pack sprites,
   fixing visual issues in half-block rendering, iterating on sprite design, or adding new states to a pack.
   Triggers: "create pack", "new mascot", "pixel art", "make character",
@@ -11,7 +11,7 @@ description: >
 
 # Create Mascot Pack
 
-Interactive assistant for creating and modifying pixel-art mascot packs for the claude-code-mascot plugin.
+Interactive assistant for creating and modifying pixel-art mascot packs for the claude-code-mascot-statusline plugin.
 
 ## Workflow Decision
 
@@ -31,7 +31,7 @@ Ask the user:
 4. Pack name (lowercase, hyphens, e.g. `space-invader`)
 5. Install location:
    - Project-local: `<project>/.claude/mascot-packs/<name>/`
-   - User-global: `~/.claude/plugins/claude-code-mascot/packs/<name>/`
+   - User-global: `~/.claude/plugins/claude-code-mascot-statusline/packs/<name>/`
 
 ### Phase 2: Palette Design
 
@@ -132,13 +132,13 @@ export CLAUDE_MASCOT_PACK=<pack-name>
 # Project config (.claude/mascot.json)
 {"pack": "<pack-name>"}
 
-# User config (~/.claude/plugins/claude-code-mascot/config.json)
+# User config (~/.claude/plugins/claude-code-mascot-statusline/config.json)
 {"pack": "<pack-name>"}
 ```
 
 ## Existing Pack Workflow
 
-1. Find the pack: search `packs/`, `~/.claude/plugins/claude-code-mascot/packs/`, `.claude/mascot-packs/`
+1. Find the pack: search `packs/`, `~/.claude/plugins/claude-code-mascot-statusline/packs/`, `.claude/mascot-packs/`
 2. Read the current pack manifest
 3. Show current sprites: `node dist/cli/storybook.js --dir <pack-dir> --color always --metrics`
 4. Make targeted edits to specific frames

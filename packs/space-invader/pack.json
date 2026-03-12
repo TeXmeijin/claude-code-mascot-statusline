@@ -2,7 +2,7 @@
   "name": "space-invader",
   "specVersion": 2,
   "displayName": "Space Invader",
-  "author": "claude-code-mascot",
+  "author": "claude-code-mascot-statusline",
   "description": "Classic arcade-style space invader with tentacle animations and expressive eyes.",
   "sprite": {
     "width": 16,

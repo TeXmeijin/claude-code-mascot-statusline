@@ -5,9 +5,9 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TeXmeijin/claude-code-mascot.git"
+    "url": "https://github.com/TeXmeijin/claude-code-mascot-statusline.git"
   },
-  "homepage": "https://github.com/TeXmeijin/claude-code-mascot",
+  "homepage": "https://github.com/TeXmeijin/claude-code-mascot-statusline",
   "license": "MIT",
   "author": "meijin",
   "keywords": ["claude-code", "plugin", "mascot", "statusline", "pixel-art", "terminal"],
