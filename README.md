@@ -178,8 +178,9 @@ Claude Code's internal statusLine renderer uses Ink's `<Text wrap="truncate">`, 
 
 This is a known Claude Code behavior documented in several open issues:
 
-- [anthropics/claude-code#28750](https://github.com/anthropics/claude-code/issues/28750) — Multi-line statusline second line disappears on narrow terminals
+- [anthropics/claude-code#28750](https://github.com/anthropics/claude-code/issues/28750) — Multi-line statusline second line disappears on narrow terminals (internal `wrap: "truncate"` identified in [comment](https://github.com/anthropics/claude-code/issues/28750#issuecomment-3962324753))
 - [anthropics/claude-code#27305](https://github.com/anthropics/claude-code/issues/27305) — StatusLine compressed when notification banners are active (`flexShrink: 1`)
+- [anthropics/claude-code#27864](https://github.com/anthropics/claude-code/issues/27864) — Footer layout structure extracted from cli.js (`isNarrow` row/column switch)
 - [anthropics/claude-code#22115](https://github.com/anthropics/claude-code/issues/22115) — Terminal columns not passed to statusLine commands
 
 The trigger is almost always the **summary text line** (state, project name, branch, model, usage stats joined with `|`), which can easily exceed 80 characters. The sprite lines themselves are only 16 characters wide in half-block mode.

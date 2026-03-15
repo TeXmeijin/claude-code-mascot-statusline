@@ -218,11 +218,22 @@ const [rows, cols] = size.split(' ').map(Number);
 
 この方式はccstatusline, claude-powerline等の他プラグインでも採用されている。
 
-#### 関連Claude Code issues
+#### 関連Claude Code issues と内部コード参照
+
+内部コードの引用元（Claude Codeは非公開だが、ユーザーがcli.jsをリバースエンジニアリングした結果がissueに投稿されている）:
+
+- `wrap: "truncate"` のstatusLineコンポーネント — [#28750 comment](https://github.com/anthropics/claude-code/issues/28750#issuecomment-3962324753)（SpunkyMartinによるcli.js解析）
+- `flexShrink: 1`/`flexShrink: 0` のレイアウト構造 — [#27305](https://github.com/anthropics/claude-code/issues/27305)（issue本文）、[#27864](https://github.com/anthropics/claude-code/issues/27864)（`JXz`コンポーネントの全体構造を掲載）
+- `isNarrow`によるrow/column切り替え — [#27864](https://github.com/anthropics/claude-code/issues/27864)（issue本文）、80カラム閾値の実証: [#25466 comment](https://github.com/anthropics/claude-code/issues/25466#issuecomment-3924097630)
+- `stdout.trim().split('\n')...` の出力加工 — issueでは未投稿。v2.1.76バンドルバイナリの直接解析による（2026-03-15時点）
+
+関連issues:
 
 - [#28750](https://github.com/anthropics/claude-code/issues/28750) — 複数行statusLineの2行目がナロー端末で消える（`wrap: "truncate"`が原因と特定）
 - [#27305](https://github.com/anthropics/claude-code/issues/27305) — 通知バナー表示中にstatusLineが圧縮される（`flexShrink`問題）
+- [#27864](https://github.com/anthropics/claude-code/issues/27864) — フッターレイアウト構造の詳細なコード抽出
 - [#22115](https://github.com/anthropics/claude-code/issues/22115) — ターミナル幅がstatusLineコマンドに渡されない
+- [#25466](https://github.com/anthropics/claude-code/issues/25466) — WezTerm分割ペインでの80カラム閾値の実証
 - [#31307](https://github.com/anthropics/claude-code/issues/31307) — 複数行statusLineでインタラクティブUIのカーソルオフセットがずれる
 
 #### 変更時の注意
