@@ -10,4 +10,15 @@ export const MASCOT_STATES = [
     "done",
     "auth_success"
 ];
+export const SUMMARY_ITEM_KEYS = [
+    "project",
+    "branch",
+    "model",
+    "tools",
+    "failures",
+    "subagents",
+    "context",
+    "usage5h",
+    "usage7d"
+];
 //# sourceMappingURL=types.js.map

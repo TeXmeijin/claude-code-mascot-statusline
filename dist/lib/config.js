@@ -1,6 +1,7 @@
 import path from "node:path";
 import { DEFAULT_PACK_NAME, PROJECT_CONFIG_RELATIVE_PATH, USER_CONFIG_PATH } from "./constants.js";
 import { readJsonIfExists } from "./fs.js";
+import { SUMMARY_ITEM_KEYS } from "./types.js";
 export async function loadMascotConfig(projectDir) {
     const projectConfigPath = projectDir ? path.join(projectDir, PROJECT_CONFIG_RELATIVE_PATH) : null;
     const [userConfig, projectConfig] = await Promise.all([
@@ -24,7 +25,10 @@ export async function loadMascotConfig(projectDir) {
         safeBackground: normalizeHexColor(process.env.CLAUDE_MASCOT_SAFE_BACKGROUND) ??
             normalizeHexColor(projectConfig?.safeBackground) ??
             normalizeHexColor(userConfig?.safeBackground) ??
-            "#333333"
+            "#333333",
+        summaryItems: normalizeSummaryItems(projectConfig?.summaryItems) ??
+            normalizeSummaryItems(userConfig?.summaryItems) ??
+            undefined
     };
 }
 function normalizeBoolean(value) {
@@ -50,6 +54,12 @@ function normalizeRenderProfile(value) {
         return value;
     }
     return undefined;
+}
+function normalizeSummaryItems(value) {
+    if (!Array.isArray(value))
+        return undefined;
+    const valid = value.filter((v) => typeof v === "string" && SUMMARY_ITEM_KEYS.includes(v));
+    return valid.length > 0 ? valid : undefined;
 }
 function normalizeHexColor(value) {
     if (!value) {

@@ -58,6 +58,50 @@ Then use the Write tool to write `.claude/mascot.json`:
 
 Confirm to the user which path was written.
 
+## Step 0.7: Customize summary items (optional)
+
+Ask the user if they want to customize which items appear in the status line summary.
+
+Use AskUserQuestion (adapt language to the user's language):
+- Question: Would you like to customize the status line summary items?
+- Options:
+  - "Show all (default)" — Show all available items
+  - "Customize" — Choose which items to display
+
+If the user chooses **Show all**, skip to Step 1.
+
+If the user chooses **Customize**, show the available items and let the user select:
+
+Available items (all enabled by default):
+- `project` — Project directory name
+- `branch` — Git branch
+- `model` — Model name (e.g., Opus 4.6)
+- `tools` — Tool call count in current turn
+- `failures` — Failed tool count
+- `subagents` — Active subagent count
+- `context` — Context window usage %
+- `usage5h` — 5-hour API usage %
+- `usage7d` — 7-day API usage %
+
+Ask the user which items they want to **keep** (they can list multiple, e.g., "project, branch, context, usage5h").
+
+Then ask for scope:
+
+Use AskUserQuestion (adapt language to the user's language):
+- Question: Where should this setting be saved?
+- Options:
+  - "All projects (user global)" — Writes to `<config-dir>/plugins/claude-code-mascot-statusline/config.json`
+  - "This project only" — Writes to `.claude/mascot.json` in the current project
+
+Write the config file at the chosen scope. If the file already exists, **merge** the `summaryItems` field without overwriting other settings. Use the Read tool to check for existing content first.
+
+Example config:
+```json
+{
+  "summaryItems": ["project", "branch", "context", "usage5h", "usage7d"]
+}
+```
+
 ## Step 1: Run setup helper
 
 Run the setup helper to merge statusLine and hooks into the user's settings.json (respects `$CLAUDE_CONFIG_DIR`).

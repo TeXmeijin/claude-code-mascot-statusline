@@ -57,7 +57,7 @@ describe("renderStatusLine", () => {
     state.currentState = "thinking";
     state.toolCountInTurn = 3;
 
-    expect(summarizeState("thinking", state, {})).toContain("thinking x3");
+    expect(summarizeState("thinking", state, {}).full).toContain("thinking x3");
   });
 
   it("centers half-block rows with narrow visible spans", () => {

@@ -7,7 +7,7 @@ import { DEFAULT_PACK_NAME } from "./constants.js";
 import { loadMascotConfig } from "./config.js";
 import { loadPack, loadSpriteFrame, resolveStateHoldMs } from "./pack.js";
 import { readSessionState } from "./state.js";
-import { getWidthHint, shouldUseColor } from "./terminal.js";
+import { getTerminalSize, getWidthHint, shouldUseColor } from "./terminal.js";
 import { deriveSessionStateFromTranscript } from "./transcript.js";
 import { getUsageData } from "./usage.js";
 const execFileAsync = promisify(execFileCb);
@@ -65,15 +65,37 @@ export async function renderStatusLine(input, options = {}) {
         safeBackground: options.safeBackground ?? config.safeBackground ?? "#000000",
         paletteOverride: heatPalette
     });
-    const summary = summarizeState(effectiveState, sessionState, input, usageData, gitBranch, colorEnabled, projectDir);
+    const { base, extras } = summarizeState(effectiveState, sessionState, input, usageData, gitBranch, colorEnabled, projectDir, config.summaryItems);
     if (config.twoLine) {
-        return `${art}\n${truncate(summary, widthHint)}`;
+        // Keep each line under statusLine available width to prevent cli-truncate
+        // from eating sprite lines. Claude Code uses row layout at cols >= 80,
+        // giving statusLine ≈ cols/2 - padding. Use cols - 10 as buffer.
+        const termSize = getTerminalSize();
+        const maxLineWidth = termSize ? termSize.cols - 10 : 55;
+        // Wrap summary parts within maxLineWidth
+        const allParts = [base, ...extras];
+        const summaryLines = [];
+        let current = "";
+        for (const part of allParts) {
+            const candidate = current ? `${current} | ${part}` : part;
+            if (stringWidth(stripAnsi(candidate)) > maxLineWidth && current) {
+                summaryLines.push(current);
+                current = part;
+            }
+            else {
+                current = candidate;
+            }
+        }
+        if (current)
+            summaryLines.push(current);
+        const wrappedSummary = summaryLines.map(l => truncate(l, maxLineWidth)).join("\n");
+        return `${art}\n${wrappedSummary}`;
     }
     const compactArt = art
         .replaceAll("\n", " ")
         .replaceAll(/\s+/g, " ")
         .trim();
-    return truncate(`${compactArt} ${summary}`.trim(), widthHint);
+    return truncate(`${compactArt} ${[base, ...extras].join(" | ")}`.trim(), widthHint);
 }
 export function renderSprite(pack, sprite, options) {
     const palette = options.paletteOverride ?? pack.manifest.sprite.palette;
@@ -92,7 +114,8 @@ export function renderSprite(pack, sprite, options) {
         pixelWidth
     }), offsetX * pixelWidth);
 }
-export function summarizeState(state, sessionState, input, usageData, gitBranch, colorEnabled, projectDir) {
+export function summarizeState(state, sessionState, input, usageData, gitBranch, colorEnabled, projectDir, summaryItems) {
+    const show = (key) => !summaryItems || summaryItems.includes(key);
     const base = (() => {
         switch (state) {
             case "idle":
@@ -122,37 +145,40 @@ export function summarizeState(state, sessionState, input, usageData, gitBranch,
         }
     })();
     const extras = [];
-    if (projectDir) {
-        extras.push(path.basename(projectDir));
+    if (show("project") && projectDir) {
+        const dirName = path.basename(projectDir);
+        extras.push(dirName.length > 20 ? `${dirName.slice(0, 20)}…` : dirName);
     }
-    if (gitBranch) {
+    if (show("branch") && gitBranch) {
         extras.push(`⎇ ${gitBranch}`);
     }
-    const modelLabel = input.model?.display_name ?? input.model?.id;
-    if (modelLabel) {
-        extras.push(modelLabel);
+    if (show("model")) {
+        const modelLabel = input.model?.display_name ?? input.model?.id;
+        if (modelLabel) {
+            extras.push(modelLabel);
+        }
     }
-    if (sessionState?.toolCountInTurn) {
+    if (show("tools") && sessionState?.toolCountInTurn) {
         extras.push(`tools:${sessionState.toolCountInTurn}`);
     }
-    if (sessionState?.failedToolCountInTurn) {
+    if (show("failures") && sessionState?.failedToolCountInTurn) {
         extras.push(`fail:${sessionState.failedToolCountInTurn}`);
     }
-    if (sessionState?.activeSubagentCount) {
+    if (show("subagents") && sessionState?.activeSubagentCount) {
         extras.push(`sub:${sessionState.activeSubagentCount}`);
     }
-    if (typeof input.context_window?.used_percentage === "number") {
+    if (show("context") && typeof input.context_window?.used_percentage === "number") {
         extras.push(`ctx:${Math.round(input.context_window.used_percentage)}%`);
     }
-    if (usageData?.fiveHour) {
+    if (show("usage5h") && usageData?.fiveHour) {
         const text = `5h:${Math.round(usageData.fiveHour.utilization)}%${formatResetTime(usageData.fiveHour.resetsAt)}`;
         extras.push(colorizeByHeat(text, usageData.fiveHour.utilization, colorEnabled));
     }
-    if (usageData?.sevenDay) {
+    if (show("usage7d") && usageData?.sevenDay) {
         const text = `7w:${Math.round(usageData.sevenDay.utilization)}%${formatResetTime(usageData.sevenDay.resetsAt)}`;
         extras.push(colorizeByHeat(text, usageData.sevenDay.utilization, colorEnabled));
     }
-    return [base, ...extras].join(" | ");
+    return { base, extras, full: [base, ...extras].join(" | ") };
 }
 function formatResetTime(resetsAt) {
     const resetDate = new Date(resetsAt);

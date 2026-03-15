@@ -32,6 +32,45 @@ export function getWidthHint(explicitWidth) {
     }
     return process.stdout.isTTY ? process.stdout.columns : null;
 }
+import { execSync } from "node:child_process";
+let cachedTerminalSize = null;
+const TERMINAL_SIZE_TTL_MS = 5000;
+export function getTerminalSize() {
+    if (cachedTerminalSize && Date.now() - cachedTerminalSize.fetchedAt < TERMINAL_SIZE_TTL_MS) {
+        return { cols: cachedTerminalSize.cols, rows: cachedTerminalSize.rows };
+    }
+    // Try process.stdout first (works when TTY is attached)
+    if (process.stdout.isTTY && process.stdout.columns) {
+        cachedTerminalSize = { cols: process.stdout.columns, rows: process.stdout.rows ?? 24, fetchedAt: Date.now() };
+        return { cols: cachedTerminalSize.cols, rows: cachedTerminalSize.rows };
+    }
+    // Parent process TTY approach (works in piped child processes)
+    try {
+        const tty = execSync("ps -o tty= -p $(ps -o ppid= -p $$)", {
+            encoding: "utf8",
+            stdio: ["pipe", "pipe", "ignore"],
+            shell: "/bin/sh",
+            timeout: 2000
+        }).trim();
+        if (tty && tty !== "??" && tty !== "?") {
+            const size = execSync(`stty size < /dev/${tty}`, {
+                encoding: "utf8",
+                stdio: ["pipe", "pipe", "ignore"],
+                shell: "/bin/sh",
+                timeout: 2000
+            }).trim();
+            const [rows, cols] = size.split(" ").map(Number);
+            if (Number.isFinite(cols) && Number.isFinite(rows) && cols > 0 && rows > 0) {
+                cachedTerminalSize = { cols, rows, fetchedAt: Date.now() };
+                return { cols, rows };
+            }
+        }
+    }
+    catch {
+        // Silently fall back
+    }
+    return null;
+}
 export function shellQuote(value) {
     if (/^[A-Za-z0-9_./:-]+$/.test(value)) {
         return value;

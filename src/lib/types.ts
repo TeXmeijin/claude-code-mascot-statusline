@@ -128,12 +128,27 @@ export interface UsageCacheEntry {
   data: UsageData;
 }
 
+export const SUMMARY_ITEM_KEYS = [
+  "project",
+  "branch",
+  "model",
+  "tools",
+  "failures",
+  "subagents",
+  "context",
+  "usage5h",
+  "usage7d"
+] as const;
+
+export type SummaryItemKey = (typeof SUMMARY_ITEM_KEYS)[number];
+
 export interface MascotConfig {
   pack?: string;
   color?: "auto" | "always" | "never";
   twoLine?: boolean;
   renderProfile?: RenderProfile;
   safeBackground?: string;
+  summaryItems?: SummaryItemKey[];
 }
 
 export interface RenderOptions {

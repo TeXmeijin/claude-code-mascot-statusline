@@ -2,7 +2,7 @@ import path from "node:path";
 
 import { DEFAULT_PACK_NAME, PROJECT_CONFIG_RELATIVE_PATH, USER_CONFIG_PATH } from "./constants.js";
 import { readJsonIfExists } from "./fs.js";
-import type { MascotConfig } from "./types.js";
+import { SUMMARY_ITEM_KEYS, type MascotConfig, type SummaryItemKey } from "./types.js";
 
 export async function loadMascotConfig(projectDir?: string): Promise<MascotConfig> {
   const projectConfigPath = projectDir ? path.join(projectDir, PROJECT_CONFIG_RELATIVE_PATH) : null;
@@ -33,7 +33,11 @@ export async function loadMascotConfig(projectDir?: string): Promise<MascotConfi
       normalizeHexColor(process.env.CLAUDE_MASCOT_SAFE_BACKGROUND) ??
       normalizeHexColor(projectConfig?.safeBackground) ??
       normalizeHexColor(userConfig?.safeBackground) ??
-      "#333333"
+      "#333333",
+    summaryItems:
+      normalizeSummaryItems(projectConfig?.summaryItems) ??
+      normalizeSummaryItems(userConfig?.summaryItems) ??
+      undefined
   };
 }
 
@@ -62,6 +66,14 @@ function normalizeRenderProfile(value: string | undefined): MascotConfig["render
     return value;
   }
   return undefined;
+}
+
+function normalizeSummaryItems(value: unknown): SummaryItemKey[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const valid = value.filter((v): v is SummaryItemKey =>
+    typeof v === "string" && (SUMMARY_ITEM_KEYS as readonly string[]).includes(v)
+  );
+  return valid.length > 0 ? valid : undefined;
 }
 
 function normalizeHexColor(value: string | undefined): string | undefined {
