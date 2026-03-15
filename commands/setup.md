@@ -70,20 +70,24 @@ Use AskUserQuestion (adapt language to the user's language):
 
 If the user chooses **Show all**, skip to Step 1.
 
-If the user chooses **Customize**, show the available items and let the user select:
+If the user chooses **Customize**, ask in two rounds.
 
-Available items (all enabled by default):
-- `project` — Project directory name
-- `branch` — Git branch
-- `model` — Model name (e.g., Opus 4.6)
-- `tools` — Tool call count in current turn
-- `failures` — Failed tool count
-- `subagents` — Active subagent count
-- `context` — Context window usage %
-- `usage5h` — 5-hour API usage %
-- `usage7d` — 7-day API usage %
+**Round 1 — Basic info** (AskUserQuestion, multiSelect: true):
+- Question: Which basic info items to show?
+- Options:
+  - `project` — Project directory name
+  - `branch` — Git branch
+  - `model` — Model name (e.g., Opus 4.6)
+  - `context` — Context window usage %
 
-Ask the user which items they want to **keep** (they can list multiple, e.g., "project, branch, context, usage5h").
+**Round 2 — Monitoring** (AskUserQuestion, multiSelect: true):
+- Question: Which monitoring items to show?
+- Options:
+  - `usage5h` — 5-hour API usage %
+  - `usage7d` — 7-day API usage %
+  - "Tool activity" — Tool call count, failure count, and active subagent count (`tools`, `failures`, `subagents` as a group)
+
+Combine the user's selections from both rounds to build the final `summaryItems` array. If the user selected "Tool activity", expand it to `["tools", "failures", "subagents"]`.
 
 Then ask for scope:
 
