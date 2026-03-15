@@ -128,6 +128,21 @@ Read the settings.json that was just updated and confirm:
 
 Show the user the configured statusLine command.
 
+Then, verify the render script actually works by running it with empty input:
+
+```bash
+echo '{}' | node "${CLAUDE_PLUGIN_ROOT}/dist/cli/render-status-line.js" 2>&1
+```
+
+If it fails (e.g., `Cannot find package` / `ERR_MODULE_NOT_FOUND`), install dependencies and retry:
+
+```bash
+cd "${CLAUDE_PLUGIN_ROOT}" && npm install --production && cd -
+echo '{}' | node "${CLAUDE_PLUGIN_ROOT}/dist/cli/render-status-line.js" 2>&1
+```
+
+If it still fails, show the error to the user and stop.
+
 ## Step 3: Finish
 
 Tell the user:

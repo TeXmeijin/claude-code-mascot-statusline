@@ -1,6 +1,6 @@
 {
   "name": "claude-code-mascot-statusline",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Claude Code plugin that renders a pixel-art mascot in the status line.",
   "type": "module",
   "repository": {
