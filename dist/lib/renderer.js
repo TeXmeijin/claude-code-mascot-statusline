@@ -116,6 +116,11 @@ export function renderSprite(pack, sprite, options) {
 }
 export function summarizeState(state, sessionState, input, usageData, gitBranch, colorEnabled, projectDir, summaryItems) {
     const show = (key) => !summaryItems || summaryItems.includes(key);
+    const toolName = sessionState?.lastToolName
+        ? sessionState.lastToolName.length > 25
+            ? `${sessionState.lastToolName.slice(0, 25)}…`
+            : sessionState.lastToolName
+        : undefined;
     const base = (() => {
         switch (state) {
             case "idle":
@@ -125,11 +130,11 @@ export function summarizeState(state, sessionState, input, usageData, gitBranch,
                     ? `thinking x${sessionState.toolCountInTurn}`
                     : "thinking";
             case "tool_running":
-                return sessionState?.lastToolName ? `running ${sessionState.lastToolName}` : "running tool";
+                return toolName ? `running ${toolName}` : "running tool";
             case "tool_success":
-                return sessionState?.lastToolName ? `${sessionState.lastToolName} ok` : "tool ok";
+                return toolName ? `${toolName} ok` : "tool ok";
             case "tool_failure":
-                return sessionState?.lastToolName ? `${sessionState.lastToolName} failed` : "tool failed";
+                return toolName ? `${toolName} failed` : "tool failed";
             case "question":
                 return "needs input";
             case "permission":
