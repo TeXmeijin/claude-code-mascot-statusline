@@ -241,6 +241,23 @@ const [rows, cols] = size.split(' ').map(Number);
 - サマリーに新しい項目を追加する場合、全項目を`|`で結合した1行の長さを意識すること。長いほどナロー端末で折り返し行数が増える
 - プロジェクトディレクトリ名は20文字で切り詰めている（`dirName.slice(0, 20) + '…'`）
 - `summaryItems`設定でユーザーが表示項目を絞れるようにしている
+- **`maxLineWidth`をcols/2にしてはいけない** — Claude Codeのrow layoutは固定半分ではなくflex配分であり、cols/2にすると狭い端末で改行が早すぎてレイアウトが崩れる。`cols - N`ベースを維持し、個々のパーツ（ツール名等）の切り詰め上限で調整すること
+- ツール名（`lastToolName`）は15文字で切り詰めている。MCP系のツール名は `mcp__xxx__yyy` 形式で非常に長くなるため、これを長くするとrow layout環境でサマリー行が溢れてcli-truncateがスプライト全体を切り詰める原因になる
+
+#### 開発時のstatusLine反映方法
+
+`~/.claude-indiv/settings.json`（または`~/.claude/settings.json`）の`statusLine.command`のパスをソースディレクトリの`dist/`に向けることで、`pnpm build`するだけで変更を反映できる:
+
+```json
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node /Users/meijin/Documents/src/private/claude-code-mascot-statusline/dist/cli/render-status-line.js"
+  }
+}
+```
+
+リリース後はプラグインキャッシュのパスに戻すこと。
 
 Relevant files:
 

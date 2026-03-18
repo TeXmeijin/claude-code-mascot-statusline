@@ -71,7 +71,7 @@ export async function renderStatusLine(input, options = {}) {
         // from eating sprite lines. Claude Code uses row layout at cols >= 80,
         // giving statusLine ≈ cols/2 - padding. Use cols - 10 as buffer.
         const termSize = getTerminalSize();
-        const maxLineWidth = termSize ? termSize.cols - 10 : 55;
+        const maxLineWidth = termSize ? termSize.cols - 18 : 55;
         // Wrap summary parts within maxLineWidth
         const allParts = [base, ...extras];
         const summaryLines = [];
@@ -117,8 +117,8 @@ export function renderSprite(pack, sprite, options) {
 export function summarizeState(state, sessionState, input, usageData, gitBranch, colorEnabled, projectDir, summaryItems) {
     const show = (key) => !summaryItems || summaryItems.includes(key);
     const toolName = sessionState?.lastToolName
-        ? sessionState.lastToolName.length > 25
-            ? `${sessionState.lastToolName.slice(0, 25)}…`
+        ? sessionState.lastToolName.length > 15
+            ? `${sessionState.lastToolName.slice(0, 15)}…`
             : sessionState.lastToolName
         : undefined;
     const base = (() => {
