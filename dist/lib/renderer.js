@@ -37,7 +37,7 @@ export async function renderStatusLine(input, options = {}) {
     const now = options.now ?? new Date();
     const config = await loadMascotConfig(input.workspace?.project_dir);
     const packName = options.packName ?? config.pack ?? DEFAULT_PACK_NAME;
-    const pack = await loadPack({ input, packName });
+    const pack = await loadPack({ input, packName, compact: config.compact });
     const colorEnabled = options.forceColor ?? shouldUseColor(config.color ?? "auto");
     const widthHint = getWidthHint(options.widthHint);
     const narrow = widthHint !== null && widthHint < 72;

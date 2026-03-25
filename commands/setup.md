@@ -106,6 +106,35 @@ Example config:
 }
 ```
 
+## Step 0.8: Compact mode (optional)
+
+Ask the user if they want to enable compact mode (face-only, 6-row display instead of 8-row).
+
+Use AskUserQuestion (adapt language to the user's language):
+- Question: Would you like to enable compact mode? (face-only, 6 rows instead of 8)
+- Options:
+  - "Normal (default)" — Full body 8-row display
+  - "Compact" — Face-only 6-row display
+
+If the user chooses **Normal**, skip to Step 1.
+
+If the user chooses **Compact**, ask for scope:
+
+Use AskUserQuestion (adapt language to the user's language):
+- Question: Where should this setting be saved?
+- Options:
+  - "All projects (user global)" — Writes to `<config-dir>/plugins/claude-code-mascot-statusline/config.json`
+  - "This project only" — Writes to `.claude/mascot.json` in the current project
+
+Write the config file at the chosen scope. If the file already exists, **merge** the `compact` field without overwriting other settings. Use the Read tool to check for existing content first.
+
+Example config:
+```json
+{
+  "compact": true
+}
+```
+
 ## Step 1: Run setup helper
 
 Run the setup helper to merge statusLine and hooks into the user's settings.json (respects `$CLAUDE_CONFIG_DIR`).

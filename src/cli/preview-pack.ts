@@ -7,11 +7,15 @@ import type { MascotState } from "../lib/types.js";
 
 async function main(): Promise<void> {
   const args = new Map<string, string>();
-  for (let index = 2; index < process.argv.length; index += 2) {
+  for (let index = 2; index < process.argv.length; index++) {
     const key = process.argv[index];
-    const value = process.argv[index + 1];
-    if (key?.startsWith("--") && value) {
-      args.set(key.slice(2), value);
+    if (!key?.startsWith("--")) continue;
+    const next = process.argv[index + 1];
+    if (next && !next.startsWith("--")) {
+      args.set(key.slice(2), next);
+      index++;
+    } else {
+      args.set(key.slice(2), "");
     }
   }
 
@@ -19,10 +23,11 @@ async function main(): Promise<void> {
   const frames = Number.parseInt(args.get("frames") ?? "3", 10);
   const widthHint = args.get("width") ? Number.parseInt(args.get("width")!, 10) : null;
   const colorEnabled = args.get("color") !== "never";
+  const compact = args.has("compact");
 
   const pack = args.has("dir")
     ? await validatePackDirectory(path.resolve(args.get("dir")!))
-    : await loadPack({ packName: args.get("pack") ?? undefined, cwd: process.cwd() });
+    : await loadPack({ packName: args.get("pack") ?? undefined, cwd: process.cwd(), compact });
 
   const narrow = widthHint !== null && widthHint < 72;
   const spriteNames = getSpriteNamesForState(pack, state, narrow).slice(0, frames);

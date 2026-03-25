@@ -4,20 +4,27 @@ import { getSpriteNamesForState, loadPack, validatePackDirectory } from "../lib/
 import { renderSprite } from "../lib/renderer.js";
 async function main() {
     const args = new Map();
-    for (let index = 2; index < process.argv.length; index += 2) {
+    for (let index = 2; index < process.argv.length; index++) {
         const key = process.argv[index];
-        const value = process.argv[index + 1];
-        if (key?.startsWith("--") && value) {
-            args.set(key.slice(2), value);
+        if (!key?.startsWith("--"))
+            continue;
+        const next = process.argv[index + 1];
+        if (next && !next.startsWith("--")) {
+            args.set(key.slice(2), next);
+            index++;
+        }
+        else {
+            args.set(key.slice(2), "");
         }
     }
     const state = (args.get("state") ?? "idle");
     const frames = Number.parseInt(args.get("frames") ?? "3", 10);
     const widthHint = args.get("width") ? Number.parseInt(args.get("width"), 10) : null;
     const colorEnabled = args.get("color") !== "never";
+    const compact = args.has("compact");
     const pack = args.has("dir")
         ? await validatePackDirectory(path.resolve(args.get("dir")))
-        : await loadPack({ packName: args.get("pack") ?? undefined, cwd: process.cwd() });
+        : await loadPack({ packName: args.get("pack") ?? undefined, cwd: process.cwd(), compact });
     const narrow = widthHint !== null && widthHint < 72;
     const spriteNames = getSpriteNamesForState(pack, state, narrow).slice(0, frames);
     spriteNames.forEach((spriteName, index) => {

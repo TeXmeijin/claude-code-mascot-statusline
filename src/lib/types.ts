@@ -53,6 +53,16 @@ export interface PackTiming {
   authHoldMs?: number;
 }
 
+export interface CompactPackSection {
+  sprite: SpriteSpec;
+  sprites: Record<string, SpriteFrame>;
+  states?: Partial<Record<MascotState, string[]>>;
+  fallbacks?: {
+    unknown: string;
+    narrow?: string;
+  };
+}
+
 export interface PackManifest {
   name: string;
   specVersion: 2;
@@ -67,6 +77,7 @@ export interface PackManifest {
     narrow?: string;
   };
   timing?: PackTiming;
+  compact?: CompactPackSection;
   meta?: Record<string, unknown>;
 }
 
@@ -146,6 +157,7 @@ export interface MascotConfig {
   pack?: string;
   color?: "auto" | "always" | "never";
   twoLine?: boolean;
+  compact?: boolean;
   renderProfile?: RenderProfile;
   safeBackground?: string;
   summaryItems?: SummaryItemKey[];

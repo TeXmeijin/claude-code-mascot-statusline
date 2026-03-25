@@ -24,6 +24,11 @@ export async function loadMascotConfig(projectDir?: string): Promise<MascotConfi
       projectConfig?.twoLine ??
       userConfig?.twoLine ??
       true,
+    compact:
+      normalizeBoolean(process.env.CLAUDE_MASCOT_COMPACT) ??
+      projectConfig?.compact ??
+      userConfig?.compact ??
+      false,
     renderProfile:
       normalizeRenderProfile(process.env.CLAUDE_MASCOT_RENDER_PROFILE) ??
       projectConfig?.renderProfile ??

@@ -13,10 +13,11 @@ export async function loadPack(options) {
             continue;
         }
         validateManifest(candidateRoot, manifest);
+        const effectiveManifest = options.compact ? applyCompactSection(manifest) : manifest;
         return {
             rootDir: candidateRoot,
             manifestPath: await resolveManifestPath(candidateRoot),
-            manifest
+            manifest: effectiveManifest
         };
     }
     throw new Error(`Pack "${packName}" was not found`);
@@ -182,6 +183,22 @@ function validateManifest(packDir, manifest) {
             throw new Error(`Unknown sprite reference "${spriteName}" in ${packDir}`);
         }
     }
+    if (manifest.compact) {
+        const c = manifest.compact;
+        if (!c.sprite || c.sprite.width < 1 || c.sprite.height < 1) {
+            throw new Error(`Invalid compact sprite spec in ${packDir}`);
+        }
+        if (!c.sprites || Object.keys(c.sprites).length === 0) {
+            throw new Error(`Compact section must define sprite data in ${packDir}`);
+        }
+        for (const [name, frame] of Object.entries(c.sprites)) {
+            validateSpriteFrame(frame, c.sprite.width, c.sprite.height, manifest.sprite.palette.length, `compact/${name}`, packDir);
+        }
+        const compactFallback = c.fallbacks?.unknown ?? manifest.fallbacks.unknown;
+        if (!c.sprites[compactFallback]) {
+            throw new Error(`Compact fallback "${compactFallback}" is missing in ${packDir}`);
+        }
+    }
 }
 function resolveFramePeriod(manifest, state) {
     switch (state) {
@@ -215,6 +232,22 @@ function validateSpriteFrame(frame, expectedWidth, expectedHeight, paletteSize, 
             }
         }
     }
+}
+function applyCompactSection(manifest) {
+    const compact = manifest.compact;
+    if (!compact) {
+        return manifest;
+    }
+    return {
+        ...manifest,
+        sprite: {
+            ...compact.sprite,
+            palette: compact.sprite.palette ?? manifest.sprite.palette
+        },
+        sprites: compact.sprites,
+        states: compact.states ?? manifest.states,
+        fallbacks: compact.fallbacks ?? manifest.fallbacks
+    };
 }
 function normalizePaletteColor(entry, index, packDir) {
     if (entry === null || entry === "transparent") {
